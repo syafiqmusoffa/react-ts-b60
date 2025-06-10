@@ -1,15 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "./Home";
+import Home from "../pages/Home";
 import About from "./About";
-import Register from "./Register";
-import Login from "./Login";
-import ForgotPassword from "./ForgotPassword";
-import PassReset from "./PassReset";
+import Register from "../pages/Register";
+import Login from "../pages/Login";
+import ForgotPassword from "../pages/ForgotPassword";
+import PassReset from "../pages/PassReset";
 import ProtectedRuoteLayout from "./ProtectedRuote";
-import Profile from "./Profile";
-import Search from "./Search";
-import Follows from "./Follows";
-import DetailThread from "./DetailThread";
+import Profile from "../pages/Profile";
+import Search from "../pages/Search";
+import Follows from "../pages/Follows";
+import DetailThread from "../pages/DetailThread";
 
 let router = createBrowserRouter([
   {
@@ -32,14 +32,10 @@ let router = createBrowserRouter([
         Component: Follows,
       },
       {
-        path: "/thread",
+        path: "/thread/:threadId",
         Component: DetailThread,
       },
     ],
-  },
-  {
-    path: "/",
-    Component: Home,
   },
   {
     path: "/about",

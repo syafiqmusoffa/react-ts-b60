@@ -1,7 +1,28 @@
 export type ThreadProps = {
-  username: string;
   id: number;
-  title: string;
-  body: string;
-  image?: string;
+  authorId: number;
+  content: string;
+  imageUrl?: string;
+  createdAt: string;
+  updatedAt: string;
+  author: {
+    id: number;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profile: {
+      avatarUrl: string;
+      username: string;
+    };
+    _count: {
+      comments: number;
+      PostLike: number;
+    };
+  };
 };
+
+export interface ReplyProps {
+  id: number;
+  username: string;
+  body: string;
+}

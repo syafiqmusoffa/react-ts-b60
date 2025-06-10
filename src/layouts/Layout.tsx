@@ -8,7 +8,7 @@ interface AppLayoutProps {
 
 function Layout({ children }: AppLayoutProps) {
   return (
-    <div className="flex bg-gray-900 w-full ">
+    <div className="flex  ">
       {/* sidebar kiri */}
       <LeftBar />
 

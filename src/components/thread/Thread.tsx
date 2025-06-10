@@ -3,41 +3,48 @@ import { Button } from "../ui/button";
 import Like from "./Like";
 import Comment from "./Comment";
 import DropdownThread from "./DropdownThread";
+import { NavLink } from "react-router-dom";
+import { useThreads } from "@/hooks/use-thread-list";
 
-interface ThreadType {
+interface Props {
   thread: ThreadProps;
 }
 
-function Thread({ thread }: ThreadType) {
-  const imgProfile = "https://picsum.photos/200";
+function Thread({ thread }: Props) {
   return (
-    <div className="mb-5 border border-black rounded-lg p-4 bg-gray-800 ">
-      <div className="flex justify-between">
+    <div className="border-t border-black px-3 py-3">
+      <div className="flex justify-between mb-6">
         <section className="flex justify-between gap-x-3">
-          <img src={imgProfile} alt="" className="w-12 h-12 rounded-full" />
+          <img
+            src={thread.author.profile.avatarUrl}
+            alt=""
+            className="w-12 h-12 rounded-full"
+          />
           <div>
-            <h1 className="text-white text-lg">{thread.title}</h1>
+            <p className="text-white text-lg">{thread.content}</p>
             <p className="text-gray-600 text-sm">
-              by
+              by{" "}
               <Button
                 variant="link"
-                onClick={() => alert(thread.username)}
+                onClick={() => alert(thread.author.profile.username)}
                 className="cursor-pointer bg-transparent text-gray-600 text-sm hover:text-gray-400 duration-100"
               >
-                {thread.username}
+                {thread.author.profile.username}
               </Button>
             </p>
-            <p className="text-gray-400 text-sm mb-3">{thread.body}</p>
-            {thread.image ? (
+            {thread.imageUrl && (
               <img
-                className="w-100 rounded-2xl"
-                src={thread.image}
-                alt={thread.title}
+                className="w-100 h-60 object-cover rounded-2xl my-2"
+                src={thread.imageUrl}
+                alt="Thread"
               />
-            ) : null}
+            )}
             <div className="flex items-center gap-x-2">
-              <Like />
-              <Comment />
+              <Like amount={thread.author._count?.PostLike ?? 0} />
+
+              <NavLink to={`/thread/${thread.id}`} className="cursor-pointer">
+                <Comment count={thread.author._count.comments} />
+              </NavLink>
             </div>
           </div>
         </section>

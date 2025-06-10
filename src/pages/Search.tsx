@@ -1,8 +1,8 @@
-import React from "react";
+
 
 function Search() {
   return (
-    <main className="p-3 h-265">
+    <main className="p-3 h-screen">
       <h1 className="pt-3 text-4xl text-gray-400 pb-3">Search</h1>
       <input
         type="text"

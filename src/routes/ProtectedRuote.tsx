@@ -1,16 +1,11 @@
 import Layout from "@/layouts/Layout";
-import { useUserStore } from "@/stores/auth";
-import { useEffect } from "react";
+import Cookies from "js-cookie";
 import { Navigate, Outlet } from "react-router-dom";
 
-function ProtectedRuoteLayout() {
-  const { user } = useUserStore();
-  // const isLogin = true;
-  useEffect(() => {
-    console.log(user);
-  }, []);
+function ProtectedRouteLayout() {
+  const token = Cookies.get("token");
 
-  if (user.username) {
+  if (token) {
     return (
       <main>
         <Layout>
@@ -19,8 +14,8 @@ function ProtectedRuoteLayout() {
       </main>
     );
   } else {
-    return <Navigate to={"/login"} />;
+    return <Navigate to="/login" replace />;
   }
 }
 
-export default ProtectedRuoteLayout;
+export default ProtectedRouteLayout;

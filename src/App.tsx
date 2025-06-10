@@ -1,15 +1,21 @@
-import "./assets/styles/App.css";
-// import { useEffect, useState } from "react";
-import { AuthProvider } from "./contexts/auth";
-// import Home from "./routes/home";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider } from "react-router-dom";
+
+
+import { Toaster } from "sonner";
 import router from "./routes";
+import { AuthProvider } from "./components/connection/contexts/AuthContext";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <Toaster />
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
 

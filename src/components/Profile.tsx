@@ -1,15 +1,26 @@
-import EditDialog from "@/components/dialog/EditDialog";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import EditDialog from "./dialog/EditDialog";
+import { useLocation } from "react-router-dom";
+import { ThreadProps } from "@/types/thread";
 
-function Profile() {
+interface Props {
+  thread: ThreadProps;
+}
+
+function ProfileComp() {
+    const location = useLocation()
+    const isNotProfilePage = ['/profile'].includes(location.pathname)
   return (
-    <main className="p-3 h-265">
-      <h1 className="pt-3 text-4xl text-gray-400">Profile</h1>
-      <div className="bg-gray-800 p-4 mt-3 rounded-lg ">
+    <main>
+      <div className="bg-[#2a2b2a] p-4 mt-3 rounded-lg ">
         <div className="relative w-full mb-6">
           {/* Background */}
-          <div className=" h-50 bg-gradient-to-r from-green-200 to-yellow-300 rounded-lg"></div>
+          <div
+            className={`${
+              isNotProfilePage ? "h-40" : "h-28"
+            } bg-gradient-to-r from-green-200 to-yellow-300 rounded-lg transition-all duration-300`}
+          ></div>
           {/* Foto Profil */}
           <Avatar className="absolute -bottom-6 left-4 w-20 h-20">
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
@@ -34,4 +45,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default ProfileComp;

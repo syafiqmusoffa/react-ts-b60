@@ -20,7 +20,7 @@ function EditDialog() {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="cursor-pointer bg-white hover:bg-gray-700 duration-100"
+          className="cursor-pointer text-white border-none bg-green-600 hover:bg-green-800 hover:text-white"
         >
           Edit Profile
         </Button>
