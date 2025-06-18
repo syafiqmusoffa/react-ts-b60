@@ -15,7 +15,7 @@ function LoginForm() {
     navigate("/");
   }
 
-  const {
+  const { 
     register,
     handleSubmit,
     formState: { errors },

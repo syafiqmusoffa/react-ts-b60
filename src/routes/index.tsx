@@ -32,14 +32,10 @@ let router = createBrowserRouter([
         Component: Follows,
       },
       {
-        path: "/thread/:threadId",
+        path: "/thread/:id",
         Component: DetailThread,
       },
     ],
-  },
-  {
-    path: "/about",
-    Component: About,
   },
   {
     path: "/register",

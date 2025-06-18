@@ -14,12 +14,33 @@ export type ThreadProps = {
       avatarUrl: string;
       username: string;
     };
+  };
+  _count: {
+    comments: number;
+    likes: number;
+  };
+  createdAtFormatted: string
+};
+
+export interface ThreadById {
+  id: number;
+  content: string;
+  imageUrl?: string;
+  createdAt: string;
+
+  author: {
+    id: number;
+    profile: {
+      username: string;
+      name?: string;
+      avatarUrl?: string;
+    };
     _count: {
+      postLike: number;
       comments: number;
-      PostLike: number;
     };
   };
-};
+}
 
 export interface ReplyProps {
   id: number;

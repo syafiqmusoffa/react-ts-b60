@@ -1,45 +1,68 @@
-import { ReplyProps, ThreadProps } from "@/types/thread";
+import { ReplyProps, ThreadById, ThreadProps } from "@/types/thread";
 import { Button } from "../ui/button";
 // import Like from "./Like";
 // import Comment from "./Comment";
 import DropdownThread from "./DropdownThread";
-import { useState } from "react";
-import { BsHeart, BsHeartFill } from "react-icons/bs";
-import ThreadCommentBox from "./ThreadCommentBox";
+import {  useState } from "react";
 
-interface ThreadType {
-  thread: ThreadProps;
-}
-function ThreadText({ thread }: ThreadType) {
-  const imgProfile = "https://picsum.photos/200";
+
+import { useParams } from "react-router-dom";
+
+import { fetchThreadById } from "@/hooks/use-thread-by-id";
+import Like from "./Like";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+
+
+function ThreadText() {
+  const { id } = useParams();
+
+ 
+  const { data: thread, isLoading, error } = fetchThreadById(id || "");
+
   const [like, setLike] = useState<boolean>(false);
   const toggleLike = () => {
     setLike(!like);
   };
+
+  if (isLoading) return <p className="p-3 text-white">Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
   return (
     <>
       <div className=" border-b border-black px-4 py-3">
         <div className="flex justify-between">
           <section className="flex justify-between gap-x-3">
-            <img src={imgProfile} alt="" className="w-12 h-12 rounded-full" />
+            {thread.author.profile.avatarUrl ? (
+              <img
+                src={thread.author.profile.avatarUrl}
+                alt={thread.author.profile.username}
+                className="w-12 h-12 rounded-full"
+              />
+            ) : (
+              <Avatar className="w-12 h-12 rounded-full">
+                <AvatarFallback>
+                  {thread.author.profile.username?.slice(0, 2).toUpperCase() ||
+                    "US"}
+                </AvatarFallback>
+              </Avatar>
+            )}
             <div>
-              <h1 className="text-white text-lg">{thread.title}</h1>
               <p className="text-gray-600 text-sm">
                 by
                 <Button
                   variant="link"
-                  onClick={() => alert(thread.username)}
+                  onClick={() => alert(thread.author.profile.username)}
                   className="cursor-pointer bg-transparent text-gray-600 text-sm hover:text-gray-400 duration-100"
                 >
-                  {thread.username}
+                  {thread.author.profile.username}
                 </Button>
               </p>
-              <p className="text-gray-400 text-sm mb-3">{thread.body}</p>
-              {thread.image ? (
+              <p className="text-gray-400 text-sm mb-3">{thread.content}</p>
+              {thread.imageUrl ? (
                 <img
-                  className="w-100 rounded-2xl"
-                  src={thread.image}
-                  alt={thread.title}
+                  className="w-100 h-80 rounded-2xl object-cover"
+                  src={thread.imageUrl}
+                  alt={thread.author.profile.name}
                 />
               ) : null}
               <div className="flex items-center gap-x-2">
@@ -48,17 +71,7 @@ function ThreadText({ thread }: ThreadType) {
                     onClick={toggleLike}
                     className="my-3 flex gap-x-2 items-center text-gray-500 hover:text-white duration-200 cursor-pointer"
                   >
-                    {like ? (
-                      <>
-                        <BsHeartFill className="text-red-600" size={20} />
-                        <span className="text-white">{thread.likes + 1}</span>
-                      </>
-                    ) : (
-                      <>
-                        <BsHeart size={20} />
-                        <span className="text-gray-500">{thread.likes}</span>
-                      </>
-                    )}
+                    <Like amount={thread.author._count?.PostLike ?? 0} />
                   </button>
                 </div>
               </div>
@@ -66,8 +79,6 @@ function ThreadText({ thread }: ThreadType) {
           </section>
           <DropdownThread />
         </div>
-        
-        
       </div>
     </>
   );
